@@ -1,0 +1,19 @@
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111;
+  overflow: hidden;
+}
+
+.stage {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 100vmax;
+  mix-blend-mode: difference;
+}
