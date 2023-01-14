@@ -4,4 +4,7 @@ export default defineConfig({
   server: {
     host: true,
   },
+  build: {
+    outDir: "./docs",
+  },
 });
