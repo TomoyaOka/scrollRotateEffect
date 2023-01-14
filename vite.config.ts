@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 export default defineConfig({
-  base: "./parallax-slider/",
+  base: "./",
   server: {
     host: true,
   },
