@@ -9,7 +9,6 @@ let image_w;
 let current = 0;
 let target = 0;
 let ease = 0.05;
-let scale = 0.5;
 /*----------------
 * 処理
 ----------------------*/
@@ -37,25 +36,15 @@ const animation = () => {
   target = window.scrollY;
   setTransform(sliderBody, `translateX(-${current}px)`);
   animationImage();
-  // animationScale();
   requestAnimationFrame(animation);
 };
 
 const animationImage = () => {
   let ratio = current / image_w;
   let intersectionRatioValue;
-
   images.forEach((img, index) => {
     intersectionRatioValue = ratio - index * 0.7;
     setTransform(img, `translateX(${intersectionRatioValue * 70}px)`);
-  });
-};
-
-const animationScale = () => {
-  current = parseFloat(lerp(current, target, ease)).toFixed(2);
-  target = window.scrollY;
-  imagesCover.forEach((img, index) => {
-    setTransform(img, `rotate(${current / 10}deg)`);
   });
 };
 
