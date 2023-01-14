@@ -1,54 +1,76 @@
 /*----------------
 * 変数・定数
 ----------------------*/
-const images = [...document.querySelectorAll(".image-body")];
-const imagesCover = [...document.querySelectorAll(".image-cover")];
-const sliderBody = document.querySelector(".parts-slider");
-let slider_w;
-let image_w;
+const container = document.querySelector(".container");
+const canvas = document.querySelector(".canvas");
+const columnOne = document.querySelector(".one");
+const columnTwo = document.querySelector(".two");
+const columnThree = document.querySelector(".three");
+const columnFour = document.querySelector(".four");
+let x = 0;
+let y = 0;
 let current = 0;
 let target = 0;
 let ease = 0.05;
+let images;
 /*----------------
 * 処理
 ----------------------*/
-images.forEach((img, index) => {
-  img.style.backgroundImage = `url(./img${index + 1}.jpg)`;
-});
+
+const setImage = () => {
+  for (let i = 0; i <= 16; i++) {
+    let imgDiv = document.createElement("div");
+    imgDiv.className = "image-cover";
+    let divImage = document.createElement("img");
+    divImage.setAttribute("src", `./img${i}.jpg`);
+    imgDiv.appendChild(divImage);
+
+    if (i < 5) {
+      columnOne.appendChild(imgDiv);
+    } else if (i < 9) {
+      columnTwo.appendChild(imgDiv);
+    } else if (i < 13) {
+      columnThree.appendChild(imgDiv);
+    } else {
+      columnFour.appendChild(imgDiv);
+    }
+  }
+};
 
 //線形補間(lerp関数)
 const lerp = (start, end, multiplier) => {
   return (1 - multiplier) * start + multiplier * end;
 };
 
-const setTransform = (el, transform) => {
-  el.style.transform = transform;
-};
+function animation(event) {
+  x = event.clientX - container.getBoundingClientRect().left;
+  y = event.clientY - container.getBoundingClientRect().top;
+  canvas.style.transform = `translate(-${x}px,-${y * 2}px)`;
+}
 
-const init = () => {
-  slider_w = sliderBody.getBoundingClientRect().width;
-  image_w = slider_w / images.length;
-  document.body.style.height = `${slider_w - (window.innerWidth - window.innerHeight)}px`;
-};
+function animationMobile(event) {
+  x = event.changedTouches[0].pageX - container.getBoundingClientRect().left;
+  y = event.changedTouches[0].pageY - container.getBoundingClientRect().top;
+  canvas.style.transform = `translate(-${x}px,-${y * 2}px)`;
+}
 
-const animation = () => {
-  current = parseFloat(lerp(current, target, ease)).toFixed(2);
-  target = window.scrollY;
-  setTransform(sliderBody, `translateX(-${current}px)`);
-  animationImage();
-  requestAnimationFrame(animation);
-};
-
-const animationImage = () => {
-  let ratio = current / image_w;
+function animationImage() {
   let intersectionRatioValue;
   images.forEach((img, index) => {
-    intersectionRatioValue = ratio - index * 0.7;
-    setTransform(img, `translateX(${intersectionRatioValue * 70}px)`);
+    current = parseFloat(lerp(current, target, ease)).toFixed(2);
+    target = (x + y) / 100;
+    intersectionRatioValue = current - index * 0.7;
+    img.style.transform = `translate(${intersectionRatioValue}px,${intersectionRatioValue}px)`;
   });
-};
 
-init();
-animation();
-//リサイズイベント
-window.addEventListener("resize", init);
+  requestAnimationFrame(animationImage);
+}
+
+setTimeout(() => {
+  images = [...document.querySelectorAll(".image-cover img")];
+  animationImage();
+}, 100);
+
+setImage();
+window.addEventListener("mousemove", animation);
+window.addEventListener("touchmove", animationMobile);
