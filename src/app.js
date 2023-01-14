@@ -14,7 +14,7 @@ let scale = 0.5;
 * 処理
 ----------------------*/
 images.forEach((img, index) => {
-  img.style.backgroundImage = `url(../public/img${index + 1}.jpg)`;
+  img.style.backgroundImage = `url(./public/img${index + 1}.jpg)`;
 });
 
 //線形補間(lerp関数)
