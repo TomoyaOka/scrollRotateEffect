@@ -1,63 +1,43 @@
-@import url("https://fonts.googleapis.com/css2?family=Bitter:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap");
 
 body {
   width: 100%;
-  height: 100svh;
+  font-family: "Cinzel Decorative", cursive;
   background-color: #000;
-  overflow: hidden;
-}
-
-h1 {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  /* transform: translate(-50%, -50%); */
-  font-size: 6vw;
-  font-family: "Bitter", serif;
-  color: #fff;
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  padding: 100px 0;
+}
+
+.item {
+  width: 100%;
+  height: 400px;
+  background-color: #ccc;
+  transition: all 0.35s ease;
+  filter: grayscale(100%);
+  position: relative;
+  counter-increment: number 1;
+  /* cursor: pointer; */
+}
+
+.item::after {
+  content: "Image" counter(number);
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-  width: 90vw;
-  height: 80svh;
-}
-
-.canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-600px, -600px);
-  width: 200%;
-  height: auto;
-  transition: 1s ease-out;
-  display: flex;
-}
-
-.canvas::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* background-color: rgba(0, 0, 0, 0.3);*/
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.1) 0%, #000000 90%);
-}
-
-.column {
-  position: relative;
-  flex: 25%;
-}
-
-.image-cover {
-  position: relative;
-  padding-top: 100%;
-  overflow: hidden;
+  left: -30px;
+  transform: translateY(-50%);
+  font-size: 80px;
+  color: #fff;
+  mix-blend-mode: difference;
 }
 
 img {
@@ -65,21 +45,18 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  filter: grayscale(100%);
-  padding: 1rem;
+  height: 100%;
+  object-fit: cover;
 }
 
 @media (max-width: 768px) {
-  h1 {
-    font-size: 7.7vw;
+  .item {
+    margin: auto;
   }
-  .canvas {
-    width: 280%;
-    transform: translate(0px, 0px);
-    padding: 0px;
-    display: flex;
-  }
-  .image-cover {
-    height: 310px;
+  .item::after {
+    content: "Image" counter(number);
+    top: 50%;
+    left: -40px;
+    font-size: 40px;
   }
 }
